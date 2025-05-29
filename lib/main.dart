@@ -1,45 +1,58 @@
-import 'package:device_preview/device_preview.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:telegram_1/screens/main_screen.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hive/hive.dart';
+import 'package:telegram_1/bloc/theme/theme_cubit.dart';
+import 'package:telegram_1/group/bloc/telegram_group_bloc.dart';
+import 'package:telegram_1/hive_save/hive_model_save.dart';
+import 'package:telegram_1/repositories/group_list_rpositoriy.dart';
+import 'package:telegram_1/routes/app_router.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:telegram_1/theme/theme.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Hive.initFlutter();
+  Hive.registerAdapter(HiveModelSaveAdapter());
+  await Hive.openBox<HiveModelSave>('saveBox');
+  final box = await Hive.openBox<HiveModelSave>('saveBox');
+  print("Коробка открыта? ${box.isOpen}");
+  final repository = GroupListRpositoriy(box: box);
+  final bloc = TelegramGroupBloc(repository: repository);
+
   runApp(
-    DevicePreview(
-      enabled: !kReleaseMode,
-      builder: (context) => MyApp(),
+    MultiBlocProvider(
+      providers: [
+        BlocProvider.value(value: bloc),
+        BlocProvider(
+          create: (context) => ThemeCubit(),
+        )
+      ],
+      child: const MyApp(),
     ),
   );
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Telegram App',
-      themeMode: ThemeMode.system,
-      theme: ThemeData.dark(),
-      home: MainScreen(),
-      useInheritedMediaQuery: true, // Добавь эту строку
-      locale: DevicePreview.locale(context), // Добавь эту строку
-      builder: DevicePreview.appBuilder, // Добавь эту строку
-    );
+        debugShowCheckedModeBanner: false,
+        home: Builder(builder: (context) {
+          return Scaffold(body:
+              BlocBuilder<TelegramGroupBloc, TelegramGroupState>(
+                  builder: (context, state) {
+            return BlocBuilder<ThemeCubit, ThemeState>(
+                builder: (context, state) {
+              return MaterialApp.router(
+                routerConfig: AppRouter.router,
+                theme: state.brightness == Brightness.dark
+                    ? darkTheme
+                    : lightTheme,
+              );
+            });
+          }));
+        }));
   }
 }
-// import 'package:flutter/material.dart';
-// import 'package:hive_flutter/hive_flutter.dart';
-// import 'package:path_provider/path_provider.dart' as path_provider; // Импорт path_provider
-// import 'package:telegram_1/screens/main_screen.dart';
-
-// import 'group.dart'; // Импорт нашей модели данных
-
-// void main() async {
-//   WidgetsFlutterBinding.ensureInitialized(); // Важно!
-//   final appDocumentDir = await path_provider.getApplicationDocumentsDirectory(); // Получаем путь к папке документов
-//   Hive.init(appDocumentDir.path); // Инициализируем Hive с указанием пути
-//   Hive.registerAdapter(GroupAdapter()); // Регистрируем адаптер для нашего класса Group
-//   await Hive.openBox<Group>('groups'); // Открываем "коробку" для хранения групп
-//   runApp(MyApp());
-// }
