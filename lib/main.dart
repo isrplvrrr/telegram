@@ -19,17 +19,15 @@ void main() async {
   final repository = GroupListRpositoriy(box: box);
   final bloc = TelegramGroupBloc(repository: repository);
 
-  runApp(
-    MultiBlocProvider(
-      providers: [
-        BlocProvider.value(value: bloc),
-        BlocProvider(
-          create: (context) => ThemeCubit(),
-        )
-      ],
-      child: const MyApp(),
-    ),
-  );
+  runApp(MultiBlocProvider(
+    providers: [
+      BlocProvider.value(value: bloc),
+      BlocProvider(
+        create: (context) => ThemeCubit(),
+      )
+    ],
+    child: const MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -44,10 +42,11 @@ class MyApp extends StatelessWidget {
               BlocBuilder<TelegramGroupBloc, TelegramGroupState>(
                   builder: (context, state) {
             return BlocBuilder<ThemeCubit, ThemeState>(
-                builder: (context, state) {
+                builder: (context, themeState) {
               return MaterialApp.router(
+                debugShowCheckedModeBanner: false,
                 routerConfig: AppRouter.router,
-                theme: state.brightness == Brightness.dark
+                theme: themeState.brightness == Brightness.dark
                     ? darkTheme
                     : lightTheme,
               );

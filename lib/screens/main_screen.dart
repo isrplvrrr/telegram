@@ -46,9 +46,9 @@ class _MainScreenState extends State<MainScreen> {
                 return ListTile(
                   title: TextButton(
                       onPressed: () {
-                        launch(group.url ?? '');
+                        launch(group.url ?? '${group.url}');
                       },
-                      child: Text(group.summary ?? "Без названия")),
+                      child: Text(group.summary ?? '${group.summary}')),
                   // subtitle: Text(group.description ?? ""),
                   // trailing: Text("ID: ${group.id}"),
                 );

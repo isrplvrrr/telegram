@@ -18,7 +18,7 @@ class HiveModelSaveAdapter extends TypeAdapter<HiveModelSave> {
     };
     return HiveModelSave(
       id: fields[0] as int,
-      title: fields[1] as String,
+      summary: fields[1] as String,
       description: fields[2] as String?,
       url: fields[3] as String?,
     );
@@ -31,7 +31,7 @@ class HiveModelSaveAdapter extends TypeAdapter<HiveModelSave> {
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
-      ..write(obj.title)
+      ..write(obj.summary)
       ..writeByte(2)
       ..write(obj.description)
       ..writeByte(3)
@@ -56,7 +56,7 @@ class HiveModelSaveAdapter extends TypeAdapter<HiveModelSave> {
 _$HiveModelSaveImpl _$$HiveModelSaveImplFromJson(Map<String, dynamic> json) =>
     _$HiveModelSaveImpl(
       id: (json['id'] as num).toInt(),
-      title: json['title'] as String,
+      summary: json['summary'] as String,
       description: json['description'] as String?,
       url: json['url'] as String?,
     );
@@ -64,7 +64,7 @@ _$HiveModelSaveImpl _$$HiveModelSaveImplFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$$HiveModelSaveImplToJson(_$HiveModelSaveImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'title': instance.title,
+      'summary': instance.summary,
       'description': instance.description,
       'url': instance.url,
     };

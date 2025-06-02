@@ -10,6 +10,10 @@ class GroupListRpositoriy {
 
   Future<List<TelegramGroupModel>> getGroupList() async {
     try {
+      final cache = getFromHiveCache(box);
+      if (cache.isNotEmpty) {
+        return getFromHiveCache(box);
+      }
       final response = await dio.get(
         'https://api.wayhomeapp.org/tranzit/',
         options: Options(headers: {
@@ -23,7 +27,7 @@ class GroupListRpositoriy {
       await saveToHive(data, box);
       return data;
     } catch (e) {
-      return getFromHiveCache(box);
+      return throw Exception('Error');
     }
   }
 
@@ -37,6 +41,8 @@ class GroupListRpositoriy {
   }
 
   List<TelegramGroupModel> getFromHiveCache(Box<HiveModelSave> box) {
-    return box.values.map((hiveItem) => hiveItem.toTelegramModel()).toList();
+    return box.values
+        .map((hiveItem) => TelegramGroupModel.fromJson(hiveItem.toJson()))
+        .toList();
   }
 }

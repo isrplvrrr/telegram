@@ -23,7 +23,7 @@ mixin _$HiveModelSave {
   @HiveField(0)
   int get id => throw _privateConstructorUsedError;
   @HiveField(1)
-  String get title => throw _privateConstructorUsedError;
+  String get summary => throw _privateConstructorUsedError;
   @HiveField(2)
   String? get description => throw _privateConstructorUsedError;
   @HiveField(3)
@@ -47,7 +47,7 @@ abstract class $HiveModelSaveCopyWith<$Res> {
   @useResult
   $Res call(
       {@HiveField(0) int id,
-      @HiveField(1) String title,
+      @HiveField(1) String summary,
       @HiveField(2) String? description,
       @HiveField(3) String? url});
 }
@@ -68,7 +68,7 @@ class _$HiveModelSaveCopyWithImpl<$Res, $Val extends HiveModelSave>
   @override
   $Res call({
     Object? id = null,
-    Object? title = null,
+    Object? summary = null,
     Object? description = freezed,
     Object? url = freezed,
   }) {
@@ -77,9 +77,9 @@ class _$HiveModelSaveCopyWithImpl<$Res, $Val extends HiveModelSave>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
-      title: null == title
-          ? _value.title
-          : title // ignore: cast_nullable_to_non_nullable
+      summary: null == summary
+          ? _value.summary
+          : summary // ignore: cast_nullable_to_non_nullable
               as String,
       description: freezed == description
           ? _value.description
@@ -103,7 +103,7 @@ abstract class _$$HiveModelSaveImplCopyWith<$Res>
   @useResult
   $Res call(
       {@HiveField(0) int id,
-      @HiveField(1) String title,
+      @HiveField(1) String summary,
       @HiveField(2) String? description,
       @HiveField(3) String? url});
 }
@@ -122,7 +122,7 @@ class __$$HiveModelSaveImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
-    Object? title = null,
+    Object? summary = null,
     Object? description = freezed,
     Object? url = freezed,
   }) {
@@ -131,9 +131,9 @@ class __$$HiveModelSaveImplCopyWithImpl<$Res>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
-      title: null == title
-          ? _value.title
-          : title // ignore: cast_nullable_to_non_nullable
+      summary: null == summary
+          ? _value.summary
+          : summary // ignore: cast_nullable_to_non_nullable
               as String,
       description: freezed == description
           ? _value.description
@@ -152,7 +152,7 @@ class __$$HiveModelSaveImplCopyWithImpl<$Res>
 class _$HiveModelSaveImpl implements _HiveModelSave {
   const _$HiveModelSaveImpl(
       {@HiveField(0) required this.id,
-      @HiveField(1) required this.title,
+      @HiveField(1) required this.summary,
       @HiveField(2) this.description,
       @HiveField(3) this.url});
 
@@ -164,7 +164,7 @@ class _$HiveModelSaveImpl implements _HiveModelSave {
   final int id;
   @override
   @HiveField(1)
-  final String title;
+  final String summary;
   @override
   @HiveField(2)
   final String? description;
@@ -174,7 +174,7 @@ class _$HiveModelSaveImpl implements _HiveModelSave {
 
   @override
   String toString() {
-    return 'HiveModelSave(id: $id, title: $title, description: $description, url: $url)';
+    return 'HiveModelSave(id: $id, summary: $summary, description: $description, url: $url)';
   }
 
   @override
@@ -183,7 +183,7 @@ class _$HiveModelSaveImpl implements _HiveModelSave {
         (other.runtimeType == runtimeType &&
             other is _$HiveModelSaveImpl &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.title, title) || other.title == title) &&
+            (identical(other.summary, summary) || other.summary == summary) &&
             (identical(other.description, description) ||
                 other.description == description) &&
             (identical(other.url, url) || other.url == url));
@@ -191,7 +191,7 @@ class _$HiveModelSaveImpl implements _HiveModelSave {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, id, title, description, url);
+  int get hashCode => Object.hash(runtimeType, id, summary, description, url);
 
   /// Create a copy of HiveModelSave
   /// with the given fields replaced by the non-null parameter values.
@@ -207,18 +207,12 @@ class _$HiveModelSaveImpl implements _HiveModelSave {
       this,
     );
   }
-
-  @override
-  TelegramGroupModel toTelegramModel() {
-    // TODO: implement toTelegramModel
-    throw UnimplementedError();
-  }
 }
 
 abstract class _HiveModelSave implements HiveModelSave {
   const factory _HiveModelSave(
       {@HiveField(0) required final int id,
-      @HiveField(1) required final String title,
+      @HiveField(1) required final String summary,
       @HiveField(2) final String? description,
       @HiveField(3) final String? url}) = _$HiveModelSaveImpl;
 
@@ -230,7 +224,7 @@ abstract class _HiveModelSave implements HiveModelSave {
   int get id;
   @override
   @HiveField(1)
-  String get title;
+  String get summary;
   @override
   @HiveField(2)
   String? get description;

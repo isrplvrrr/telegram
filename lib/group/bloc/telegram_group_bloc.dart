@@ -12,8 +12,8 @@ class TelegramGroupBloc extends Bloc<TelegramGroupEvent, TelegramGroupState> {
       emit(GroupLoadingState());
       try {
         final data = await repository.getGroupList();
-        print('Данные в Блок: ${data.length} элементов');
-        print('Первый элемент: ${data[0].toString()} элементов');
+        // print('Данные в Блок: ${data.length} элементов');
+        // print('Первый элемент: ${data[0].toString()} элементов');
 
         emit(GroupLoadedState(data));
       } catch (e) {

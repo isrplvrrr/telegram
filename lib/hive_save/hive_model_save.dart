@@ -11,7 +11,7 @@ part 'hive_model_save.g.dart';
 class HiveModelSave with _$HiveModelSave {
   const factory HiveModelSave({
     @HiveField(0) required int id,
-    @HiveField(1) required String title,
+    @HiveField(1) required String summary,
     @HiveField(2) String? description,
     @HiveField(3) String? url,
   }) = _HiveModelSave;
@@ -22,17 +22,9 @@ class HiveModelSave with _$HiveModelSave {
   factory HiveModelSave.fromTelegramModel(TelegramGroupModel model) {
     return HiveModelSave(
       id: model.id ?? 0,
-      title: model.summary ?? 'No title',
+      summary: model.summary ?? 'No title',
       description: model.description,
       url: model.url,
-    );
-  }
-  TelegramGroupModel toTelegramModel() {
-    return TelegramGroupModel(
-      id: id,
-      summary: title,
-      description: description,
-      url: url,
     );
   }
 }
