@@ -1,0 +1,2 @@
+C:/Telegram_Project_end/android/app/.cxx/RelWithDebInfo/4h6m4v4d/armeabi-v7a/CMakeFiles/edit_cache.dir
+C:/Telegram_Project_end/android/app/.cxx/RelWithDebInfo/4h6m4v4d/armeabi-v7a/CMakeFiles/rebuild_cache.dir
