@@ -10,22 +10,26 @@ class GroupListRpositoriy {
 
   Future<List<TelegramGroupModel>> getGroupList() async {
     try {
+      // await box.clear();
       final cache = getFromHiveCache(box);
+      print('${cache.isEmpty}');
       if (cache.isNotEmpty) {
         return getFromHiveCache(box);
+      } else {
+        final response = await dio.get(
+          'https://api.wayhomeapp.org/tranzit/',
+          options: Options(headers: {
+            'Authorization':
+                'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjE3NDMwNzE1MzEsImlkIjoiMTMzOCIsIm5hbWUiOiI3YTFlZDVlMzExNzI0ODY1OThiNDFjNjkyYjI4Y2E1MSIsImV4cCI6MTc0MzA3MTU5MX0.3imQktTfSkA5aBIx9WXCaw3vpxJtprMfhD6K5EmBYWo'
+          }),
+        );
+        final List<TelegramGroupModel> data = (response.data['data'] as List)
+            .map((e) => TelegramGroupModel.fromJson(e))
+            .toList();
+        await saveToHive(data, box);
+        print('${cache.isEmpty}');
+        return data;
       }
-      final response = await dio.get(
-        'https://api.wayhomeapp.org/tranzit/',
-        options: Options(headers: {
-          'Authorization':
-              'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjE3NDMwNzE1MzEsImlkIjoiMTMzOCIsIm5hbWUiOiI3YTFlZDVlMzExNzI0ODY1OThiNDFjNjkyYjI4Y2E1MSIsImV4cCI6MTc0MzA3MTU5MX0.3imQktTfSkA5aBIx9WXCaw3vpxJtprMfhD6K5EmBYWo'
-        }),
-      );
-      final List<TelegramGroupModel> data = (response.data['data'] as List)
-          .map((e) => TelegramGroupModel.fromJson(e))
-          .toList();
-      await saveToHive(data, box);
-      return data;
     } catch (e) {
       return throw Exception('Error');
     }
